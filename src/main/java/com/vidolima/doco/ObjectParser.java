@@ -29,7 +29,7 @@ final class ObjectParser {
 	static String getFieldNameValue(java.lang.reflect.Field field,
 			DocumentField annotation) {
 		String name = annotation.name();
-		if (name == null || name.isEmpty()) {
+		if (name == null || name.trim().length() == 0) {
 			name = field.getName();
 		}
 		return name;
