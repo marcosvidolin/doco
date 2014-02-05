@@ -1,13 +1,12 @@
 package com.vidolima.doco;
 
 import java.lang.annotation.Annotation;
-import java.lang.annotation.IncompleteAnnotationException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vidolima.doco.annotation.DocumentId;
+import com.vidolima.doco.exception.IllegalAnnotationDeclarationException;
 
 /**
  * Utility class containing some methods for reflection purpose.
@@ -63,11 +62,12 @@ final class ReflectionUtils {
 				classOfAnnotation);
 
 		if (result.isEmpty())
-			// TODO: lencar exception, anotacao nao encontrada
-			throw new IncompleteAnnotationException(DocumentId.class, "id");
+			throw new IllegalAnnotationDeclarationException("No "
+					+ classOfAnnotation.getName() + " annotation was found.");
 		if (result.size() > 1)
-			// TODO: lancar exception, mais de um campo anotado
-			throw new NullPointerException();
+			throw new IllegalAnnotationDeclarationException("More than one "
+					+ classOfAnnotation.getName() + " annotation was found.");
+
 		return result.get(0);
 	}
 
