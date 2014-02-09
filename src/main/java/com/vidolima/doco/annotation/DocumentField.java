@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 import com.google.appengine.api.search.Document;
 
 /**
- * Place this annotation on a single String field of an entity POJO. This field
- * defines the id of the {@link Document}.
+ * Place this annotation on fields of an entity POJO. This field defines a field
+ * of a {@link Document}.
  * 
  * @author Marcos Alexandre Vidolin de Lima
  * @since January 22, 2014
