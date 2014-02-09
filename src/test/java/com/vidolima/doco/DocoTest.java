@@ -10,10 +10,11 @@ import org.junit.runners.JUnit4;
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.GeoPoint;
+import com.google.appengine.api.search.Index;
 
 @RunWith(JUnit4.class)
 public class DocoTest {
-
+	
 	@Test
 	public void testConversionFromDocumentToObject() {
 

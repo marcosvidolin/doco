@@ -5,8 +5,10 @@ import java.util.Date;
 import com.google.appengine.api.search.GeoPoint;
 import com.vidolima.doco.annotation.DocumentField;
 import com.vidolima.doco.annotation.DocumentId;
+import com.vidolima.doco.annotation.DocumentIndex;
 import com.vidolima.doco.annotation.FieldType;
 
+@DocumentIndex
 class Foo {
 
 	@DocumentId

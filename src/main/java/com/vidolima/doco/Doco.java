@@ -1,6 +1,11 @@
 package com.vidolima.doco;
 
 import com.google.appengine.api.search.Document;
+import com.google.appengine.api.search.Index;
+import com.google.appengine.api.search.IndexSpec;
+import com.google.appengine.api.search.SearchServiceFactory;
+import com.vidolima.doco.annotation.DocumentIndex;
+import com.vidolima.doco.exception.AnnotationNotFoundException;
 import com.vidolima.doco.exception.DocumentParseException;
 import com.vidolima.doco.exception.ObjectParseException;
 
@@ -13,6 +18,29 @@ import com.vidolima.doco.exception.ObjectParseException;
  * @since January 22, 2014
  */
 public final class Doco {
+
+	/**
+	 * Obtains the Index.
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @return the {@link Index} specified with the {@link DocumentIndex}
+	 *         annotation.
+	 */
+	public Index getIndex(Class<?> clazz) {
+		String indexName;
+		try {
+			indexName = ObjectParser.getIndexName(clazz);
+		} catch (AnnotationNotFoundException e) {
+			throw new AnnotationNotFoundException(e.getMessage());
+		}
+
+		IndexSpec indexSpec = IndexSpec.newBuilder().setName(indexName).build();
+		Index index = SearchServiceFactory.getSearchService().getIndex(
+				indexSpec);
+
+		return index;
+	}
 
 	/**
 	 * This method converts the specified object, into its equivalent

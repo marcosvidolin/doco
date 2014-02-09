@@ -4,9 +4,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import com.google.appengine.api.search.Document;
+import com.google.appengine.api.search.Index;
 import com.vidolima.doco.annotation.DocumentField;
 import com.vidolima.doco.annotation.DocumentId;
+import com.vidolima.doco.annotation.DocumentIndex;
 import com.vidolima.doco.annotation.FieldType;
+import com.vidolima.doco.exception.AnnotationNotFoundException;
 
 /**
  * This class is used to create objects instances from {@link Document}s.
@@ -15,6 +18,29 @@ import com.vidolima.doco.annotation.FieldType;
  * @since January 26, 2014
  */
 final class ObjectParser {
+
+	/**
+	 * Obtaions the name of the Index.
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @return the name of the {@link Index}
+	 */
+	static String getIndexName(Class<?> clazz) {
+		DocumentIndex annotation = clazz.getAnnotation(DocumentIndex.class);
+
+		if (annotation == null)
+			throw new AnnotationNotFoundException(
+					"There is no @DocumentIndex annotation declared in "
+							+ clazz + " class.");
+
+		String name = annotation.name();
+		if (name != null && name.length() > 0) {
+			return name;
+		}
+
+		return clazz.getSimpleName();
+	}
 
 	/**
 	 * Obtains the name value of the {@link DocumentField} annotation of a given
