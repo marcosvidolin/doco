@@ -10,6 +10,7 @@ Doco (Document Converter) is a lightweight Java library used to converts (from a
 * Default type for: NUMBER, DATE and GEO_POINT
 
 ## See Also
+Search API documentation
 https://developers.google.com/appengine/docs/java/search/
 
 ## License
