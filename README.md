@@ -13,5 +13,8 @@ Doco (Document Converter) is a lightweight Java library used to converts (from a
 Search API documentation
 https://developers.google.com/appengine/docs/java/search/
 
+### Homepage
+http://www.vidolima.com/projects/doco
+
 ### License
 Doco is released under the terms of the MIT license.
