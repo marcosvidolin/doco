@@ -1,6 +1,6 @@
 Doco
 ====
-Doco (Document Converter) is a lightweight Java library used to converts (from and to) indexed Documents provided by Search API in Google App Engine.
+Doco (Document Converter) is a lightweight Java library used to convert (from and to) indexed Documents provided by Search API in Google App Engine.
 
 ### Requirements
 * Java +5
