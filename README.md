@@ -3,8 +3,8 @@ Doco
 Doco (Document Converter) is a lightweight Java library used to convert (from and to) indexed Documents provided by Search API in Google App Engine.
 
 ### Requirements
-* Java +5
-* Google App Engine Java SDK +1.8.5
+* Java 1.5+
+* Google App Engine Java SDK 1.8.5+
 
 ### TODO
 * Default type for: NUMBER, DATE and GEO_POINT
