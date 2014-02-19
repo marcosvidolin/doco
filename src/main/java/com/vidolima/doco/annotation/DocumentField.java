@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 import com.google.appengine.api.search.Document;
 
 /**
- * Place this annotation on fields of an entity POJO. This field defines a field
+ * Place this annotation on fields of an entity POJO. This annotation defines a field
  * of a {@link Document}.
  * 
  * @author Marcos Alexandre Vidolin de Lima
