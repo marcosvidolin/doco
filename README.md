@@ -10,21 +10,22 @@ http://www.vidolima.com/projects/doco
 
 ### @DocumentIndex
 
+This annotation is applied to the entity class. This annotation defines the name of the IndexSpec.
 Doco by default assume the name of the class as index id
 ```java
 // the name of the index id will be "Foo"
-@Document
+@DocumentIndex
 public class Foo {}
 ```
 You can set the index id as you want using the parameter ___name___
 ```java
-@Document(name = "customIndexId")
+@DocumentIndex(name = "customIndexId")
 public class Foo {}
 ```
 ### @DocumentId
 
 Place this annotation on fields of an entity POJO. This field defines the id of the document.
-_Obs: The id must by_ ___String___
+P.S: the id must be ___String___. In many cases the indentifier of an entity is ___Long___, you can keep this field as ___Long___ and create an ___String___ field and use it as a convertion.
 
 ```java
 @DocumentId
