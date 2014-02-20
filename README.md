@@ -60,7 +60,7 @@ You can specify the field type using the ___type___ parameter
 private Double total;
 ```
 
-See an esample: http://www.vidolima.com/projects/doco
+See the [site] (http://www.vidolima.com/projects/doco) for more details
 
 # Requirements
 * Java 1.5+
