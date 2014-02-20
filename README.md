@@ -60,6 +60,32 @@ You can specify the field type using the ___type___ parameter
 private Double total;
 ```
 
+## Conversions:
+
+Converting an object and putting it in a index
+
+```java
+// just convert a MyObject to a Document
+Doco doco = new Doco();
+Document document = doco.toDocument(myObject);
+ 				
+// gets an Index and saves the Document
+Index index = doco.getIndex(MyObject.class);
+index.put(document);
+```
+
+Converting a document to an object
+
+```java
+// gets the document from index
+Doco doco = new Doco();
+Index index = doco.getIndex(MyObject.class);
+Document document = index.get(12345L);
+
+// simple way to convert a document
+MyObject myObject = doco.fromDocument(document, MyObject.class);
+```
+
 See the [site] (http://www.vidolima.com/projects/doco) for more details
 
 # Requirements
