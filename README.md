@@ -62,7 +62,7 @@ You can specify the field type using the ___type___ parameter
 private Double total;
 ```
 
-## Field Types
+## Field Types:
 
 These are all valid types you can use to specify a document field with a __"type"__ parameter in a __@DocumentField__ annotation.
 
@@ -98,7 +98,10 @@ FieldType.GEO_POINT
 
 ## Conversions:
 
-Converting an object and putting it in a index
+Once you map your entity its time to play with Doco.
+
+
+##### Converting an object and putting it in a index
 
 ```java
 // just convert a Foo to a Document
@@ -110,7 +113,7 @@ Index index = doco.getIndex(Foo.class);
 index.put(document);
 ```
 
-Converting a document to an object
+##### Converting a document to an object
 
 ```java
 // gets the document from index
