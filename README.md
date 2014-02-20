@@ -6,7 +6,7 @@ http://www.vidolima.com/projects/doco
 
 # How to Use Doco
 
-Before converting objects into documents (or vice versa), you need to tell __Doco__ which fields will be used. Maps the fields you want to search in a document with following annotations.
+Before converting objects to documents (or vice versa), you need to tell __Doco__ which fields will be used. Maps the fields you want to search in a document with following annotations.
 
 ## Annotations:
 
@@ -101,7 +101,7 @@ FieldType.GEO_POINT
 Once you map your entity its time to play with Doco.
 
 
-##### Converting a Foo object into a Document and putting it in a index
+##### Converting a Foo object to a Document and putting it in a index
 
 ```java
 // just convert a Foo to a Document
@@ -113,7 +113,7 @@ Index index = doco.getIndex(Foo.class);
 index.put(document);
 ```
 
-##### Getting the Document in an index and converting it into a Foo object.
+##### Getting the Document in an index and converting it to a Foo object.
 
 ```java
 // gets the document from index
