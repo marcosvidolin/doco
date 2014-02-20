@@ -65,7 +65,7 @@ private Double total;
 Converting an object and putting it in a index
 
 ```java
-// just convert a MyObject to a Document
+// just convert a Foo to a Document
 Doco doco = new Doco();
 Document document = doco.toDocument(foo);
  				
@@ -82,7 +82,7 @@ Doco doco = new Doco();
 Index index = doco.getIndex(Foo.class);
 Document document = index.get(12345L);
 
-// simple way to convert a document
+// simple way to convert a document to a Foo
 Foo foo = doco.fromDocument(document, Foo.class);
 ```
 
