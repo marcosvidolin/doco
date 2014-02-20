@@ -101,7 +101,7 @@ FieldType.GEO_POINT
 Once you map your entity its time to play with Doco.
 
 
-##### Converting an object and putting it in a index
+##### Converting an Foo object into a Document and putting it in a index
 
 ```java
 // just convert a Foo to a Document
@@ -113,7 +113,7 @@ Index index = doco.getIndex(Foo.class);
 index.put(document);
 ```
 
-##### Converting a document to an object
+##### Getting the Document in an index and converting it into a Foo object.
 
 ```java
 // gets the document from index
