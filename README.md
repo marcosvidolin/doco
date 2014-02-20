@@ -32,7 +32,12 @@ The type of a field annotated with ___DocumentId___ must be ___Integer___, ___Lo
 private Long id;
 ```
 
-If the ___name___ parameter was not defined the 
+You can specify a name to an id using ___name___ parameter
+
+```java
+@DocumentId(name = "otherIdName")
+private Long id;
+```
 
 ### @DocumentField
 
@@ -55,6 +60,7 @@ You can specify the field type using the ___type___ parameter
 private Double total;
 ```
 
+See an esample: http://www.vidolima.com/projects/doco
 
 # Requirements
 * Java 1.5+
