@@ -25,11 +25,11 @@ public class Foo {}
 ### @DocumentId
 
 Place this annotation on fields of an entity POJO. This field defines the id of the document.
-P.S: the id must be ___String___. In many cases the indentifier of an entity is ___Long___, you can keep this field as ___Long___ and create an ___String___ field and use it as a convertion.
+The type of a field annotated with ___DocumentId___ must be ___Integer___, ___Long___ or ___String___.
 
 ```java
 @DocumentId
-private String id;
+private Long id;
 ```
 
 If the ___name___ parameter was not defined the 
