@@ -101,7 +101,7 @@ FieldType.GEO_POINT
 Once you map your entity its time to play with Doco.
 
 
-##### Converting an Foo object into a Document and putting it in a index
+##### Converting a Foo object into a Document and putting it in a index
 
 ```java
 // just convert a Foo to a Document
