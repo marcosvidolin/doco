@@ -8,6 +8,8 @@ http://www.vidolima.com/projects/doco
 
 ## Annotations:
 
+Before converting objects into documents, you need to tell Doco which fields will be used. Maps the fields you want to search in a document with following annotations.
+
 ### @DocumentIndex
 
 This annotation is applied to the entity class. This annotation defines the name of the IndexSpec.
