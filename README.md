@@ -62,6 +62,40 @@ You can specify the field type using the ___type___ parameter
 private Double total;
 ```
 
+## Field Types
+
+These are all valid types you can use to specify a document field with a __"type"__ parameter in a __@DocumentField__ annotation.
+
+__Atom Field__ - an indivisible character string
+```java
+FieldType.ATOM
+```
+
+__Text Field__ - a plain text string that can be searched word by word
+```java
+FieldType.TEXT
+```
+
+__Number Field__ - a floating point number
+```java
+FieldType.NUMBER
+```
+
+__HTML Field__ - a string that contains HTML markup tags, only the text outside the markup tags can be searched
+```java
+FieldType.HTML
+```
+
+__Date Field__ - a date object with year/month/day and optional time
+```java
+FieldType.DATE
+```
+
+__Geopoint Field__ - a data object with latitude and longitude coordinates
+```java
+FieldType.GEO_POINT
+```
+
 ## Conversions:
 
 Converting an object and putting it in a index
