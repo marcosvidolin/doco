@@ -229,7 +229,6 @@ final class DocumentParser {
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 */
-	@SuppressWarnings("rawtypes")
 	Document parseDocument(Object obj, Class<?> classOfObj)
 			throws IllegalArgumentException, IllegalAccessException {
 
