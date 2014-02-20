@@ -10,7 +10,8 @@ import com.google.appengine.api.search.Document;
 
 /**
  * Place this annotation on fields of an entity POJO. This field defines the id
- * of the {@link Document}.
+ * of the {@link Document}. The type of the field must be {@link String},
+ * {@link Long} or {@link Integer}.
  * 
  * @author Marcos Alexandre Vidolin de Lima
  * @since January 22, 2014

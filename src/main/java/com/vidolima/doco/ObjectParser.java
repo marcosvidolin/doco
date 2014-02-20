@@ -10,6 +10,7 @@ import com.vidolima.doco.annotation.DocumentId;
 import com.vidolima.doco.annotation.DocumentIndex;
 import com.vidolima.doco.annotation.FieldType;
 import com.vidolima.doco.exception.AnnotationNotFoundException;
+import com.vidolima.doco.exception.ObjectParseException;
 
 /**
  * This class is used to create objects instances from {@link Document}s.
@@ -131,6 +132,24 @@ final class ObjectParser {
 	}
 
 	/**
+	 * Obtain the class type of the field annotated with {@link DocumentId}.
+	 * 
+	 * @param fieldId
+	 *            the {@link Field} annotated with {@link DocumentId}.
+	 * @return the field class type
+	 */
+	private Class<?> getFieldIdClassType(java.lang.reflect.Field fieldId) {
+		Class<?> fieldType = fieldId.getType();
+
+		if (fieldType.isPrimitive())
+			if (fieldType.isPrimitive())
+				throw new ObjectParseException(
+						"The type of a DocumentId field can not by primitive. Change the type of the field: "
+								+ fieldId);
+		return fieldType;
+	}
+
+	/**
 	 * Parses a {@link Document} to an {@link Object}.
 	 * 
 	 * @param document
@@ -149,7 +168,14 @@ final class ObjectParser {
 		// the ID value
 		java.lang.reflect.Field fieldId = ReflectionUtils.getAnnotatedField(
 				classOfObj, DocumentId.class);
-		fieldId.set(instanceOfT, document.getId());
+
+		Class<?> fieldType = getFieldIdClassType(fieldId);
+		if (fieldType.equals(java.lang.String.class))
+			fieldId.set(instanceOfT, document.getId());
+		if (fieldType.equals(java.lang.Long.class))
+			fieldId.set(instanceOfT, Long.valueOf(document.getId()));
+		if (fieldType.equals(java.lang.Integer.class))
+			fieldId.set(instanceOfT, Integer.valueOf(document.getId()));
 
 		// others values
 		List<java.lang.reflect.Field> fields = ReflectionUtils

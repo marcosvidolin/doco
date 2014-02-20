@@ -2,7 +2,6 @@ package com.vidolima.doco;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,8 +89,9 @@ final class ReflectionUtils {
 	 *             interface declaring the underlying field (or a subclass or
 	 *             implementor thereof).
 	 */
-	static <T> T getFieldValue(Field field, Object obj, Class<T> classOfT)
-			throws IllegalArgumentException, IllegalAccessException {
+	static <T> T getFieldValue(java.lang.reflect.Field field, Object obj,
+			Class<T> classOfT) throws IllegalArgumentException,
+			IllegalAccessException {
 		return classOfT.cast(field.get(obj));
 	}
 

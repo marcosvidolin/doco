@@ -19,7 +19,7 @@ public class DocoTest {
 	public void testConversionFromDocumentToObject() {
 
 		Foo t = new Foo();
-		t.setCode("123456");
+		t.setCode(1);
 		t.setAtomFieldTest("This is a Atom field");
 		t.setDateFieldTest(new Date());
 		t.setGeopointFieldTest(new GeoPoint(1, 0));
@@ -33,7 +33,7 @@ public class DocoTest {
 		Doco doco = new Doco();
 		Document doc = doco.toDocument(t);
 
-		Assert.assertEquals(doc.getId(), t.getCode());
+		Assert.assertEquals(Integer.valueOf(doc.getId()), t.getCode());
 		Assert.assertEquals(doc.getOnlyField("atomFieldTest").getAtom(), t.getAtomFieldTest());
 		Assert.assertEquals(doc.getOnlyField("dateFieldTest").getDate(), t.getDateFieldTest());
 		Assert.assertEquals(doc.getOnlyField("geopointFieldTest").getGeoPoint(), t.getGeopointFieldTest());
@@ -64,7 +64,7 @@ public class DocoTest {
 		Doco doco = new Doco();
 		Foo f = doco.fromDocument(doc, Foo.class);
 
-		Assert.assertEquals(doc.getId(), f.getCode());
+		Assert.assertEquals(Integer.valueOf(doc.getId()), f.getCode());
 		Assert.assertEquals(doc.getOnlyField("atomFieldTest").getAtom(), f.getAtomFieldTest());
 		Assert.assertEquals(doc.getOnlyField("dateFieldTest").getDate(), f.getDateFieldTest());
 		Assert.assertEquals(doc.getOnlyField("geopointFieldTest").getGeoPoint(), f.getGeopointFieldTest());

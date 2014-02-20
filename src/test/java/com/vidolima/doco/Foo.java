@@ -12,7 +12,7 @@ import com.vidolima.doco.annotation.FieldType;
 class Foo {
 
 	@DocumentId
-	private String code;
+	private Integer code;
 
 	@DocumentField
 	private String textFieldWithoutTypeAndName;
@@ -41,11 +41,11 @@ class Foo {
 	@DocumentField(type = FieldType.GEO_POINT)
 	private GeoPoint geopointFieldTest;
 
-	public String getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

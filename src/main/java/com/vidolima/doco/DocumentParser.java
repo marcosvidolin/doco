@@ -68,21 +68,23 @@ final class DocumentParser {
 	 * Returns the {@link DocumentId} value of a given Object.
 	 * 
 	 * @param obj
+	 *            the object base
 	 * @param classOfObj
-	 * @return
+	 *            the class of object
+	 * @return the id of the document
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	private String getId(Object obj, Class<?> classOfObj)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <T> T getId(Object obj, Class<?> classOfObj, Class classOfT)
 			throws IllegalArgumentException, IllegalAccessException {
 
 		java.lang.reflect.Field field = getDocumentIdField(classOfObj);
+		T id = (T) ReflectionUtils.getFieldValue(field, obj, classOfT);
 
-		String id = ReflectionUtils.getFieldValue(field, obj, String.class);
-
-		if (id == null || (id.trim().length() == 0)) {
-			throw new DocumentParseException("No id was set in "
-					+ field.getName());
+		if (id == null) {
+			throw new DocumentParseException("No id was set to \""
+					+ field.getName() + "\" field in " + classOfObj);
 		}
 
 		return id;
@@ -227,10 +229,13 @@ final class DocumentParser {
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 */
+	@SuppressWarnings("rawtypes")
 	Document parseDocument(Object obj, Class<?> classOfObj)
 			throws IllegalArgumentException, IllegalAccessException {
 
-		String id = getId(obj, classOfObj);
+		java.lang.reflect.Field field = getDocumentIdField(classOfObj);
+		String id = String.valueOf(getId(obj, classOfObj, field.getType()));
+
 		Document.Builder builder = Document.newBuilder().setId(id);
 
 		for (com.google.appengine.api.search.Field f : getAllSearchFields(obj,
