@@ -6,7 +6,7 @@ http://www.vidolima.com/projects/doco
 
 # How to Use Doco
 
-Before converting objects into documents, you need to tell Doco which fields will be used. Maps the fields you want to search in a document with following annotations.
+Before converting objects into documents (or vice versa), you need to tell Doco which fields will be used. Maps the fields you want to search in a document with following annotations.
 
 ## Annotations:
 
