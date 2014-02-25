@@ -33,6 +33,11 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<scm>
+		<connection>scm:git:git@github.com:marcosvidolin/doco.git</connection>
+		<developerConnection>scm:git:git@github.com:marcosvidolin/doco.git</developerConnection>
+		<url>git@github.com:marcosvidolin/doco.git</url>
+	</scm>
 	<developers>
 		<developer>
 			<name>Marcos Alexandre Vidolin de Lima</name>
