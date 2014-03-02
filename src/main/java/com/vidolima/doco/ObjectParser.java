@@ -10,6 +10,7 @@ import com.vidolima.doco.annotation.DocumentId;
 import com.vidolima.doco.annotation.DocumentIndex;
 import com.vidolima.doco.annotation.FieldType;
 import com.vidolima.doco.exception.AnnotationNotFoundException;
+import com.vidolima.doco.exception.IllegalAnnotationDeclarationException;
 import com.vidolima.doco.exception.ObjectParseException;
 
 /**
@@ -91,26 +92,62 @@ final class ObjectParser {
 	}
 
 	/**
+	 * Obtains the number value of a DocumentField typed as NUMBER.
+	 * 
+	 * @param document
+	 *            the {@link Document} that contains the field
+	 * @param field
+	 *            the field to get the value
+	 * @param fieldName
+	 *            the name of the field in Document
+	 * @return the Object number value
+	 */
+	private Object getDocumentFieldNumberValue(Document document,
+			java.lang.reflect.Field field, String fieldName) {
+
+		Class<?> fieldType = field.getType();
+
+		if (Integer.class.equals(fieldType))
+			return Integer.valueOf(document.getOnlyField(fieldName).getNumber()
+					.intValue());
+		if (Long.class.equals(fieldType))
+			return Long.valueOf(document.getOnlyField(fieldName).getNumber()
+					.longValue());
+		if (Float.class.equals(fieldType))
+			return Float.valueOf(document.getOnlyField(fieldName).getNumber()
+					.floatValue());
+		if (Double.class.equals(fieldType))
+			return document.getOnlyField(fieldName).getNumber();
+
+		throw new ObjectParseException(
+				"A DocumentField typed as NUMBER must be Long, Integer, Float or Double.");
+	}
+
+	/**
 	 * Obtains the value of the document field given a {@link Document} and a
 	 * field name.
 	 * 
 	 * @param document
 	 *            the {@link Document} that contains the field
-	 * @param fieldName
-	 *            the name of the field to get the value
+	 * @param field
+	 *            the field to get the value
 	 * @return the value of the field
 	 */
-	private Object getDocumentFieldValue(Document document, String fieldName) {
+	private Object getDocumentFieldValue(Document document,
+			java.lang.reflect.Field field) {
 
-		com.google.appengine.api.search.Field field = document
+		DocumentField annotation = getDocumentFieldAnnotation(field);
+
+		String fieldName = getFieldNameValue(field, annotation);
+
+		com.google.appengine.api.search.Field f = document
 				.getOnlyField(fieldName);
 
-		com.google.appengine.api.search.Field.FieldType fieldType = field
-				.getType();
+		com.google.appengine.api.search.Field.FieldType fieldType = f.getType();
 
 		if (com.google.appengine.api.search.Field.FieldType.TEXT
 				.equals(fieldType))
-			return field.getText();
+			return f.getText();
 		else if (com.google.appengine.api.search.Field.FieldType.ATOM
 				.equals(fieldType))
 			return document.getOnlyField(fieldName).getAtom();
@@ -122,13 +159,14 @@ final class ObjectParser {
 			return document.getOnlyField(fieldName).getDate();
 		else if (com.google.appengine.api.search.Field.FieldType.NUMBER
 				.equals(fieldType))
-			return document.getOnlyField(fieldName).getNumber();
+			return getDocumentFieldNumberValue(document, field, fieldName);
 		else if (com.google.appengine.api.search.Field.FieldType.GEO_POINT
 				.equals(fieldType))
 			return document.getOnlyField(fieldName).getGeoPoint();
 
-		// TODO: exception?
-		return null;
+		throw new IllegalAnnotationDeclarationException(
+				"Invalid com.google.appengine.api.search.Field.FieldType: "
+						+ fieldType);
 	}
 
 	/**
@@ -144,9 +182,34 @@ final class ObjectParser {
 		if (fieldType.isPrimitive())
 			if (fieldType.isPrimitive())
 				throw new ObjectParseException(
-						"The type of a DocumentId field can not by primitive. Change the type of the field: "
+						"The type of a DocumentId field can not be primitive. Change the type of the field: "
 								+ fieldId);
 		return fieldType;
+	}
+
+	/**
+	 * Obtain the Field Id value.
+	 * 
+	 * @param fieldId
+	 *            FieldId
+	 * @param document
+	 *            the Document
+	 * @return value of the field id
+	 */
+	private Object getFieldIdValue(java.lang.reflect.Field fieldId,
+			Document document) {
+
+		Class<?> fieldType = getFieldIdClassType(fieldId);
+
+		if (String.class.equals(fieldType))
+			return document.getId();
+		if (Long.class.equals(fieldType))
+			return Long.valueOf(document.getId());
+		if (Integer.class.equals(fieldType))
+			return Integer.valueOf(document.getId());
+
+		throw new ObjectParseException(
+				"A DocumentId must be String, Long or Integer.");
 	}
 
 	/**
@@ -168,27 +231,14 @@ final class ObjectParser {
 		// the ID value
 		java.lang.reflect.Field fieldId = ReflectionUtils.getAnnotatedField(
 				classOfObj, DocumentId.class);
-
-		Class<?> fieldType = getFieldIdClassType(fieldId);
-		if (fieldType.equals(java.lang.String.class))
-			fieldId.set(instanceOfT, document.getId());
-		if (fieldType.equals(java.lang.Long.class))
-			fieldId.set(instanceOfT, Long.valueOf(document.getId()));
-		if (fieldType.equals(java.lang.Integer.class))
-			fieldId.set(instanceOfT, Integer.valueOf(document.getId()));
+		fieldId.set(instanceOfT, getFieldIdValue(fieldId, document));
 
 		// others values
 		List<java.lang.reflect.Field> fields = ReflectionUtils
 				.getAnnotatedFields(classOfObj, DocumentField.class);
 
 		for (java.lang.reflect.Field f : fields) {
-
-			DocumentField annotation = ObjectParser
-					.getDocumentFieldAnnotation(f);
-
-			String fieldName = ObjectParser.getFieldNameValue(f, annotation);
-			Object value = getDocumentFieldValue(document, fieldName);
-
+			Object value = getDocumentFieldValue(document, f);
 			f.set(instanceOfT, value);
 		}
 

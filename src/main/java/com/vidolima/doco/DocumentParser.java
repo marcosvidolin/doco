@@ -91,6 +91,107 @@ final class DocumentParser {
 	}
 
 	/**
+	 * Obtains a {@link com.google.appengine.api.search.Field} given a name,
+	 * value and type.
+	 * 
+	 * @param fieldValue
+	 *            the value to be set to the returned field
+	 * @param name
+	 *            the name of returned field
+	 * @param field
+	 *            the {@link java.lang.reflect.Field}
+	 * @param obj
+	 *            the object base
+	 * 
+	 * @return com.google.appengine.api.search.Field
+	 */
+	private com.google.appengine.api.search.Field getSearchNumberField(
+			String name, java.lang.reflect.Field field, Object fieldValue) {
+
+		if (Integer.class.equals(field.getType())) {
+			Integer number = (Integer) fieldValue;
+			return Field.newBuilder().setName(name).setNumber(number).build();
+		}
+		if (Long.class.equals(field.getType())) {
+			Long number = (Long) fieldValue;
+			return Field.newBuilder().setName(name).setNumber(number).build();
+		}
+		if (Float.class.equals(field.getType())) {
+			Float number = (Float) fieldValue;
+			return Field.newBuilder().setName(name).setNumber(number).build();
+		}
+		if (Double.class.equals(field.getType())) {
+			Double number = (Double) fieldValue;
+			return Field.newBuilder().setName(name).setNumber(number).build();
+		}
+
+		throw new DocumentParseException(
+				"A DocumentField typed as NUMBER must be Long, Integer, Float or Double.");
+	}
+
+	/**
+	 * Obtains a {@link com.google.appengine.api.search.Field} given a name,
+	 * value and type.
+	 * 
+	 * @param fieldValue
+	 *            the value to be set to the returned field
+	 * @param name
+	 *            the name of returned field
+	 * @param field
+	 *            the {@link java.lang.reflect.Field}
+	 * @param obj
+	 *            the object base
+	 * @return the {@link com.google.appengine.api.search.Field}
+	 * @throws IllegalAccessException
+	 */
+	private com.google.appengine.api.search.Field getSearchFieldByFieldType(
+			String name, java.lang.reflect.Field field, Object obj,
+			FieldType fieldType) throws IllegalAccessException {
+
+		Object fieldValue = field.get(obj);
+
+		if (FieldType.TEXT.equals(fieldType)) {
+			String text = (String) fieldValue;
+			return Field.newBuilder().setName(name).setText(text).build();
+		}
+		if (FieldType.HTML.equals(fieldType)) {
+			String html = (String) fieldValue;
+			return Field.newBuilder().setName(name).setHTML(html).build();
+		}
+		if (FieldType.ATOM.equals(fieldType)) {
+			String atom = (String) fieldValue;
+			return Field.newBuilder().setName(name).setAtom(atom).build();
+		}
+		if (FieldType.DATE.equals(fieldType)) {
+			if (fieldValue == null) {
+				throw new NullPointerException(
+						"Date and geopoint fields must be assigned a non-null value.");
+			}
+			Date date = (Date) fieldValue;
+			return Field.newBuilder().setName(name).setDate(date).build();
+		}
+		if (FieldType.GEO_POINT.equals(fieldType)) {
+			if (fieldValue == null) {
+				throw new NullPointerException(
+						"Date and geopoint fields must be assigned a non-null value.");
+			}
+			GeoPoint geoPoint = (GeoPoint) fieldValue;
+			return Field.newBuilder().setName(name).setGeoPoint(geoPoint)
+					.build();
+		}
+		if (FieldType.NUMBER.equals(fieldType))
+			return getSearchNumberField(name, field, fieldValue);
+
+		// Note: When you create a document you must specify all of its
+		// attributes using the Document.Builder class method. You cannot add,
+		// remove, or delete fields, nor change the identifier or any other
+		// attribute once the document has been created. Date and geopoint
+		// fields must be assigned a non-null value. Atom, text, HTML, and
+		// number fields can be empty
+		return null;
+	}
+
+	/**
 	 * Obtains a list of {@link com.google.appengine.api.search.Field} from
 	 * {@link FieldType}.
 	 * 
@@ -119,10 +220,8 @@ final class DocumentParser {
 			if (annotation.type().equals(fieldType)) {
 
 				String name = ObjectParser.getFieldNameValue(f, annotation);
-
-				Object fieldValue = f.get(obj);
 				com.google.appengine.api.search.Field field = getSearchFieldByFieldType(
-						name, fieldValue, fieldType);
+						name, f, obj, fieldType);
 
 				fields.add(field);
 			}
@@ -156,66 +255,6 @@ final class DocumentParser {
 		}
 
 		return fields;
-	}
-
-	/**
-	 * Obtains a {@link com.google.appengine.api.search.Field} given a name,
-	 * value and type.
-	 * 
-	 * @param fieldValue
-	 *            the value to be set to the returned field
-	 * @param name
-	 *            the name of returned field
-	 * @param fieldType
-	 *            the {@link FieldType}
-	 * @return the {@link com.google.appengine.api.search.Field}
-	 * @throws IllegalAccessException
-	 */
-	private com.google.appengine.api.search.Field getSearchFieldByFieldType(
-			String name, Object fieldValue, FieldType fieldType)
-			throws IllegalAccessException {
-
-		if (FieldType.TEXT.equals(fieldType)) {
-			String text = (String) fieldValue;
-			return Field.newBuilder().setName(name).setText(text).build();
-		}
-		if (FieldType.HTML.equals(fieldType)) {
-			String html = (String) fieldValue;
-			return Field.newBuilder().setName(name).setHTML(html).build();
-		}
-		if (FieldType.ATOM.equals(fieldType)) {
-			String atom = (String) fieldValue;
-			return Field.newBuilder().setName(name).setAtom(atom).build();
-		}
-		if (FieldType.DATE.equals(fieldType)) {
-			if (fieldValue == null) {
-				throw new NullPointerException(
-						"Date and geopoint fields must be assigned a non-null value.");
-			}
-			Date date = (Date) fieldValue;
-			return Field.newBuilder().setName(name).setDate(date).build();
-		}
-		if (FieldType.GEO_POINT.equals(fieldType)) {
-			if (fieldValue == null) {
-				throw new NullPointerException(
-						"Date and geopoint fields must be assigned a non-null value.");
-			}
-			GeoPoint geoPoint = (GeoPoint) fieldValue;
-			return Field.newBuilder().setName(name).setGeoPoint(geoPoint)
-					.build();
-		}
-		if (FieldType.NUMBER.equals(fieldType)) {
-			Double number = (Double) fieldValue;
-			return Field.newBuilder().setName(name).setNumber(number).build();
-		}
-
-		// Note: When you create a document you must specify all of its
-		// attributes using the Document.Builder class method. You cannot add,
-		// remove, or delete fields, nor change the identifier or any other
-		// attribute once the document has been created. Date and geopoint
-		// fields must be assigned a non-null value. Atom, text, HTML, and
-		// number fields can be empty
-		return null;
 	}
 
 	/**

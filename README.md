@@ -133,7 +133,6 @@ See the [site] (http://www.vidolima.com/projects/doco) for more details
 
 # TODO
 * Default type for: NUMBER, DATE and GEO_POINT
-* To permit more types (Double, Integer, Long, Float and primitive numbers) for NUMBER field
 * Convert collections
 
 # See Also
