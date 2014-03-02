@@ -76,7 +76,7 @@ __Text Field__ - a plain text string that can be searched word by word
 FieldType.TEXT
 ```
 
-__Number Field__ - a Integer, Double, Float or Long field
+__Number Field__ - an Integer, Double, Float or Long field
 ```java
 FieldType.NUMBER
 ```
