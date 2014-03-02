@@ -7,7 +7,7 @@
 - To permit more types (Double, Integer, Long, Float and primitive numbers) for NUMBER field
 
 **Updates**
-- Refactoring of the classe ObjectParser
+- Refactoring of the class ObjectParser
 
 
 
