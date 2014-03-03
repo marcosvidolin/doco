@@ -108,6 +108,9 @@ final class DocumentParser {
 	private com.google.appengine.api.search.Field getSearchNumberField(
 			String name, java.lang.reflect.Field field, Object fieldValue) {
 
+		if (fieldValue == null)
+			return null;
+
 		if (Integer.class.equals(field.getType())) {
 			Integer number = (Integer) fieldValue;
 			return Field.newBuilder().setName(name).setNumber(number).build();
@@ -218,7 +221,6 @@ final class DocumentParser {
 					.getDocumentFieldAnnotation(f);
 
 			if (annotation.type().equals(fieldType)) {
-
 				String name = ObjectParser.getFieldNameValue(f, annotation);
 				com.google.appengine.api.search.Field field = getSearchFieldByFieldType(
 						name, f, obj, fieldType);

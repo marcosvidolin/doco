@@ -135,6 +135,10 @@ See the [site] (http://www.vidolima.com/projects/doco) for more details
 * Default type for: NUMBER, DATE and GEO_POINT
 * Convert collections
 
+# You can't do
+* A document with multiple fields with the same name
+* A NUMBER field value must be less than or equal to 2147483647.000000 (Google Search API limitation)
+
 # See Also
 Search API documentation
 https://developers.google.com/appengine/docs/java/search/

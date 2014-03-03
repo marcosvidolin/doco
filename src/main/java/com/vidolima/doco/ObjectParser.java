@@ -137,36 +137,32 @@ final class ObjectParser {
 			java.lang.reflect.Field field) {
 
 		DocumentField annotation = getDocumentFieldAnnotation(field);
-
 		String fieldName = getFieldNameValue(field, annotation);
+
+		if (document.getFieldCount(fieldName) == 0)
+			return null;
 
 		com.google.appengine.api.search.Field f = document
 				.getOnlyField(fieldName);
 
-		com.google.appengine.api.search.Field.FieldType fieldType = f.getType();
-
-		if (com.google.appengine.api.search.Field.FieldType.TEXT
-				.equals(fieldType))
+		switch (f.getType()) {
+		case TEXT:
 			return f.getText();
-		else if (com.google.appengine.api.search.Field.FieldType.ATOM
-				.equals(fieldType))
-			return document.getOnlyField(fieldName).getAtom();
-		else if (com.google.appengine.api.search.Field.FieldType.HTML
-				.equals(fieldType))
-			return document.getOnlyField(fieldName).getHTML();
-		else if (com.google.appengine.api.search.Field.FieldType.DATE
-				.equals(fieldType))
-			return document.getOnlyField(fieldName).getDate();
-		else if (com.google.appengine.api.search.Field.FieldType.NUMBER
-				.equals(fieldType))
+		case ATOM:
+			return f.getAtom();
+		case HTML:
+			return f.getHTML();
+		case DATE:
+			return f.getDate();
+		case NUMBER:
 			return getDocumentFieldNumberValue(document, field, fieldName);
-		else if (com.google.appengine.api.search.Field.FieldType.GEO_POINT
-				.equals(fieldType))
-			return document.getOnlyField(fieldName).getGeoPoint();
+		case GEO_POINT:
+			return f.getGeoPoint();
+		}
 
 		throw new IllegalAnnotationDeclarationException(
 				"Invalid com.google.appengine.api.search.Field.FieldType: "
-						+ fieldType);
+						+ f.getType());
 	}
 
 	/**
@@ -180,10 +176,9 @@ final class ObjectParser {
 		Class<?> fieldType = fieldId.getType();
 
 		if (fieldType.isPrimitive())
-			if (fieldType.isPrimitive())
-				throw new ObjectParseException(
-						"The type of a DocumentId field can not be primitive. Change the type of the field: "
-								+ fieldId);
+			throw new ObjectParseException(
+					"The type of a DocumentId field can not be primitive. Change the type of the field: "
+							+ fieldId);
 		return fieldType;
 	}
 
