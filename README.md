@@ -144,4 +144,4 @@ Search API documentation
 https://developers.google.com/appengine/docs/java/search/
 
 # License
-Doco is released under the terms of the MIT license.
+Doco is released under the terms of the [MIT License](http://opensource.org/licenses/MIT).
