@@ -101,13 +101,13 @@ final class ObjectParser {
 
         Class<?> fieldType = field.getType();
 
-        if (Integer.TYPE.equals(fieldType))
+        if (Integer.TYPE.equals(fieldType) || Integer.class.equals(field.getType()))
             return Integer.valueOf(document.getOnlyField(fieldName).getNumber().intValue());
-        if (Long.TYPE.equals(fieldType))
+        if (Long.TYPE.equals(fieldType) || Long.class.equals(field.getType()))
             return Long.valueOf(document.getOnlyField(fieldName).getNumber().longValue());
-        if (Float.TYPE.equals(fieldType))
+        if (Float.TYPE.equals(fieldType) || Float.class.equals(field.getType()))
             return Float.valueOf(document.getOnlyField(fieldName).getNumber().floatValue());
-        if (Double.TYPE.equals(fieldType))
+        if (Double.TYPE.equals(fieldType) || Double.class.equals(field.getType()))
             return document.getOnlyField(fieldName).getNumber();
 
         throw new ObjectParseException("A DocumentField typed as NUMBER must be Long, Integer, Float or Double.");

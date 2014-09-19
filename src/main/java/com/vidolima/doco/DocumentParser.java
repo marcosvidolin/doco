@@ -98,19 +98,19 @@ final class DocumentParser {
         if (fieldValue == null)
             return null;
 
-        if (Integer.TYPE.equals(field.getType())) {
+        if (Integer.TYPE.equals(field.getType()) || Integer.class.equals(field.getType())) {
             Integer number = (Integer) fieldValue;
             return Field.newBuilder().setName(name).setNumber(number).build();
         }
-        if (Long.TYPE.equals(field.getType())) {
+        if (Long.TYPE.equals(field.getType()) || Long.class.equals(field.getType())) {
             Long number = (Long) fieldValue;
             return Field.newBuilder().setName(name).setNumber(number).build();
         }
-        if (Float.TYPE.equals(field.getType())) {
+        if (Float.TYPE.equals(field.getType()) || Float.class.equals(field.getType())) {
             Float number = (Float) fieldValue;
             return Field.newBuilder().setName(name).setNumber(number).build();
         }
-        if (Double.TYPE.equals(field.getType())) {
+        if (Double.TYPE.equals(field.getType()) || Double.class.equals(field.getType())) {
             Double number = (Double) fieldValue;
             return Field.newBuilder().setName(name).setNumber(number).build();
         }
