@@ -1,61 +1,64 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.vidolima</groupId>
-	<artifactId>doco</artifactId>
-	<version>0.3.0</version>
-	<packaging>jar</packaging>
-	<inceptionYear>2014</inceptionYear>
-	<name>Doco</name>
-	<url>http://www.vidolima.com/projects/doco</url>
-	<description>Doco - Documment Converter</description>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<licenses>
-		<license>
-			<name>The MIT License (MIT)</name>
-			<url>http://opensource.org/licenses/MIT</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<tagNameFormat>v@{project.version}</tagNameFormat>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<releaseProfiles>releases</releaseProfiles>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.8.8</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	<scm>
-		<connection>scm:git:git@github.com:marcosvidolin/doco.git</connection>
-		<developerConnection>scm:git:git@github.com:marcosvidolin/doco.git</developerConnection>
-		<url>git@github.com:marcosvidolin/doco.git</url>
-	  <tag>v0.2.0</tag>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.vidolima</groupId>
+  <artifactId>doco</artifactId>
+  <version>0.3.0</version>
+  <packaging>jar</packaging>
+  <inceptionYear>2014</inceptionYear>
+  <name>Doco</name>
+  <url>http://www.vidolima.com/projects/doco</url>
+  <description>Doco - Documment Converter</description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+  </properties>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <tagNameFormat>v@{project.version}</tagNameFormat>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <releaseProfiles>releases</releaseProfiles>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>1.9.5</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <scm>
+    <connection>scm:git:git@github.com:marcosvidolin/doco.git</connection>
+    <developerConnection>scm:git:git@github.com:marcosvidolin/doco.git</developerConnection>
+    <url>git@github.com:marcosvidolin/doco.git</url>
+    <tag>v0.2.0</tag>
   </scm>
-	<developers>
-		<developer>
-			<name>Marcos Alexandre Vidolin de Lima</name>
-			<email>marcosvidolin@gmail.com</email>
-		</developer>
-	</developers>
+  <developers>
+    <developer>
+      <name>Marcos Alexandre Vidolin de Lima</name>
+      <email>marcosvidolin@gmail.com</email>
+    </developer>
+  </developers>
 </project>
