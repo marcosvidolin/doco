@@ -194,7 +194,6 @@ final class DocumentParser {
         for (java.lang.reflect.Field f : getAllDocumentField(classOfObj)) {
 
             // TODO: validate field (declaration of annotation)
-
             DocumentField annotation = ObjectParser.getDocumentFieldAnnotation(f);
 
             if (annotation.type().equals(fieldType)) {
@@ -239,16 +238,21 @@ final class DocumentParser {
      * 
      * @param obj
      *            the object to be parsed
+     * @param documentId
+     *            user defined id of document (e.g. 'Key' of a datastore entity).
      * @param typeOfObj
      *            the base class of the given object
      * @return a {@link Document}
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
-    Document parseDocument(Object obj, Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
-
-        java.lang.reflect.Field field = getDocumentIdField(classOfObj);
-        String id = String.valueOf(getId(obj, classOfObj, field.getType()));
+    Document parseDocument(Object obj, String documentId, Class<?> classOfObj) throws IllegalArgumentException,
+        IllegalAccessException {
+        String id = documentId;
+        if (id == null) {
+            java.lang.reflect.Field field = getDocumentIdField(classOfObj);
+            id = String.valueOf(getId(obj, classOfObj, field.getType()));
+        }
 
         Document.Builder builder = Document.newBuilder().setId(id);
 
