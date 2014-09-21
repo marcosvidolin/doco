@@ -1,5 +1,15 @@
 ## RELEASE NOTES
 
+## Version 1.0.0 - Sep 19, 2014
+
+**New**
+- Entities can have both long and Long as field type (same for int, double, float).
+- Null GeoPt and Date fields are ignored instead of throwing exception.
+- Polymorphic types are handled using @DocumentIndexSubClass annotation (added test for same).
+
+**Updates**
+- Updated app-engine version to be 1.9.5 and java compiler to 1.7 (this should probably be left for cnosumer to decide).
+
 
 ### Version 0.3.2 - Mar 3, 2014
 
