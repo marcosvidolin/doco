@@ -9,8 +9,7 @@ import java.lang.annotation.Target;
 import com.google.appengine.api.search.Document;
 
 /**
- * Place this annotation on fields of an entity POJO. This annotation defines a field
- * of a {@link Document}.
+ * Place this annotation on fields of an entity POJO. This annotation defines a field of a {@link Document}.
  * 
  * @author Marcos Alexandre Vidolin de Lima
  * @since January 22, 2014
@@ -20,17 +19,17 @@ import com.google.appengine.api.search.Document;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DocumentField {
 
-	/**
-	 * Specifies the name of the field.
-	 * 
-	 * @return name.
-	 */
-	String name() default "";
+    /**
+     * Specifies the name of the field.
+     * 
+     * @return name.
+     */
+    String name() default "";
 
-	/**
-	 * Specifies the {@link FieldType} of the field.
-	 * 
-	 * @return {@link FieldType}.
-	 */
-	FieldType type() default FieldType.TEXT;
+    /**
+     * Specifies the {@link FieldType} of the field.
+     * 
+     * @return {@link FieldType}.
+     */
+    FieldType type() default FieldType.TEXT;
 }

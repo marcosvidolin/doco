@@ -9,8 +9,7 @@ import java.lang.annotation.Target;
 import com.google.appengine.api.search.IndexSpec;
 
 /**
- * This annotation is applied to the entity class. This annotation defines the
- * name of the {@link IndexSpec}.
+ * This annotation is applied to the entity class. This annotation defines the name of the {@link IndexSpec}.
  * 
  * @author Marcos Alexandre Vidolin de Lima
  * @since February 9, 2014
@@ -20,10 +19,10 @@ import com.google.appengine.api.search.IndexSpec;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DocumentIndex {
 
-	/**
-	 * Specifies the name of the Index.
-	 * 
-	 * @return name.
-	 */
-	String name() default "";
+    /**
+     * Specifies the name of the Index.
+     * 
+     * @return name.
+     */
+    String name() default "";
 }
