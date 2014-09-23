@@ -140,15 +140,15 @@ final class DocumentParser {
         Object fieldValue = field.get(obj);
 
         if (FieldType.TEXT.equals(fieldType)) {
-            String text = (String) fieldValue;
+            String text = String.valueOf(fieldValue);
             return Field.newBuilder().setName(name).setText(text).build();
         }
         if (FieldType.HTML.equals(fieldType)) {
-            String html = (String) fieldValue;
+            String html = String.valueOf(fieldValue);
             return Field.newBuilder().setName(name).setHTML(html).build();
         }
         if (FieldType.ATOM.equals(fieldType)) {
-            String atom = (String) fieldValue;
+            String atom = String.valueOf(fieldValue);
             return Field.newBuilder().setName(name).setAtom(atom).build();
         }
         if (FieldType.DATE.equals(fieldType)) {
