@@ -1,5 +1,9 @@
 ## RELEASE NOTES
 
+## Version 1.1.0 - Sep 22, 2014
+**New**
+- Allowing DocumentId to be specified explicitly. Useful for users define id of document (e.g. 'Key' of a datastore entity).
+
 ## Version 1.0.0 - Sep 19, 2014
 
 **New**
