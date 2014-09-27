@@ -16,7 +16,7 @@ import com.vidolima.doco.exception.ObjectParseException;
  * @author Marcos Alexandre Vidolin de Lima
  * @since January 22, 2014
  */
-public final class Doco {
+public class Doco {
 
     /**
      * Obtains the Index.
