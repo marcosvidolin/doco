@@ -9,7 +9,7 @@
 	<url>http://www.vidolima.com/projects/doco</url>
 	<description>Doco - Documment Converter</description>
 	<properties>
-		<maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+		<!--maven.javadoc.failOnError>false</maven.javadoc.failOnError-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -44,6 +44,10 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.5</version>
 				</plugin>
+		    <plugin>
+		      <artifactId>maven-javadoc-plugin</artifactId>
+		      <version>2.9.1</version>
+		    </plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -79,6 +83,14 @@
 			      <goals>
 			        <goal>jar</goal>
 			      </goals>
+            <configuration>
+              <!-- switch on dependency-driven aggregation -->
+              <includeDependencySources>true</includeDependencySources>
+              <dependencySourceIncludes>
+                <!-- include ONLY dependencies I control -->
+                <dependencySourceInclude>com.vidolima.doco:*</dependencySourceInclude>
+              </dependencySourceIncludes>
+            </configuration>
 			    </execution>
 			  </executions>
 			</plugin>
