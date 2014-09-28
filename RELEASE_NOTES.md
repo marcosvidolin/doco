@@ -1,8 +1,16 @@
 ## RELEASE NOTES
 
+## Version 1.2.0 - Sep 28, 2014
+**Updates**
+- Doco should not be 'final' so that it can be mocked using Mockito
+- Replacing cast to String by String.valueOf(object).
+- Adding doco formatter to avoid formatting issues in code review.
+
+
 ## Version 1.1.0 - Sep 22, 2014
 **New**
 - Allowing DocumentId to be specified explicitly. Useful for users define id of document (e.g. 'Key' of a datastore entity).
+
 
 ## Version 1.0.0 - Sep 19, 2014
 

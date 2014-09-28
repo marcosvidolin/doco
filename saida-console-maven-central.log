@@ -1,0 +1,192 @@
+dev@skynet:~/Development/workspace-jee-kepler/doco$ ./maven-central-deploy.sh 
+./maven-central-deploy.sh: line 1: !/bin/bash: No such file or directory
+Really deploy to maven cetral repository  (yes/no)? yes
+Enter passphrase for /home/dev/.ssh/id_rsa: 
+Identity added: /home/dev/.ssh/id_rsa (/home/dev/.ssh/id_rsa)
+2048 73:03:88:78:60:36:bf:f1:8d:e0:08:1f:d3:b3:29:1c marcosvidolin@gmail.com (RSA)
+2048 2a:1b:2a:76:ff:fc:7f:2d:27:e0:28:20:58:68:f1:b4 /home/dev/.ssh/id_rsa (RSA)
+2048 2a:1b:2a:76:ff:fc:7f:2d:27:e0:28:20:58:68:f1:b4 marcosvidolin@gmail.com (RSA)
+[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Doco 1.1.7-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-release-plugin:2.5:clean (default-cli) @ doco ---
+[INFO] Cleaning up after release...
+[INFO] 
+[INFO] --- maven-release-plugin:2.5:prepare (default-cli) @ doco ---
+[INFO] Verifying that there are no local modifications...
+[INFO]   ignoring changes on: **/pom.xml.releaseBackup, **/pom.xml.next, **/pom.xml.tag, **/pom.xml.branch, **/release.properties, **/pom.xml.backup
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git rev-parse --show-toplevel
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git status --porcelain .
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Checking dependencies and plugins for snapshots ...
+[INFO] Transforming 'Doco'...
+[INFO] Not generating release POMs
+[INFO] Executing goals 'clean verify'...
+[INFO] [INFO] Scanning for projects...
+[INFO] [INFO]                                                                         
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] Building Doco 1.1.7
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ doco ---
+[INFO] [INFO] Deleting /home/dev/Development/workspace-jee-kepler/doco/target
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ doco ---
+[INFO] [INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] [INFO] skip non existing resourceDirectory /home/dev/Development/workspace-jee-kepler/doco/src/main/resources
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-compiler-plugin:2.5.1:compile (default-compile) @ doco ---
+[INFO] [INFO] Compiling 14 source files to /home/dev/Development/workspace-jee-kepler/doco/target/classes
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ doco ---
+[INFO] [INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] [INFO] skip non existing resourceDirectory /home/dev/Development/workspace-jee-kepler/doco/src/test/resources
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-compiler-plugin:2.5.1:testCompile (default-testCompile) @ doco ---
+[INFO] [INFO] Compiling 3 source files to /home/dev/Development/workspace-jee-kepler/doco/target/test-classes
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ doco ---
+[INFO] [INFO] Surefire report directory: /home/dev/Development/workspace-jee-kepler/doco/target/surefire-reports
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vidolima.doco.DocoTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.333 sec
+[INFO] 
+[INFO] Results :
+[INFO] 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ doco ---
+[INFO] [INFO] Building jar: /home/dev/Development/workspace-jee-kepler/doco/target/doco-1.1.7.jar
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] BUILD SUCCESS
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] Total time: 5.384s
+[INFO] [INFO] Finished at: Wed Sep 24 07:55:40 BRT 2014
+[INFO] [INFO] Final Memory: 16M/134M
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] Checking in modified POMs...
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git add -- pom.xml
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git rev-parse --show-toplevel
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git status --porcelain .
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git commit --verbose -F /tmp/maven-scm-707586459.commit pom.xml
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git symbolic-ref HEAD
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git push git@github.com:marcosvidolin/doco.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Tagging release with the label v1.1.7...
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git tag -F /tmp/maven-scm-1945984106.commit v1.1.7
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git push git@github.com:marcosvidolin/doco.git refs/tags/v1.1.7
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git ls-files
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Transforming 'Doco'...
+[INFO] Not removing release POMs
+[INFO] Checking in modified POMs...
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git add -- pom.xml
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git rev-parse --show-toplevel
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git status --porcelain .
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git commit --verbose -F /tmp/maven-scm-139743974.commit pom.xml
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git symbolic-ref HEAD
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco && git push git@github.com:marcosvidolin/doco.git refs/heads/master:refs/heads/master
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco
+[INFO] Release preparation complete.
+[INFO] 
+[INFO] --- maven-release-plugin:2.5:perform (default-cli) @ doco ---
+[INFO] Checking out the project to perform the release ...
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco/target && git clone --branch v1.1.7 git@github.com:marcosvidolin/doco.git /home/dev/Development/workspace-jee-kepler/doco/target/checkout
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco/target
+[INFO] Executing: /bin/sh -c cd /tmp && git ls-remote git@github.com:marcosvidolin/doco.git
+[INFO] Working directory: /tmp
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco/target/checkout && git fetch git@github.com:marcosvidolin/doco.git
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco/target/checkout
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco/target/checkout && git checkout v1.1.7
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco/target/checkout
+[INFO] Executing: /bin/sh -c cd /home/dev/Development/workspace-jee-kepler/doco/target/checkout && git ls-files
+[INFO] Working directory: /home/dev/Development/workspace-jee-kepler/doco/target/checkout
+[INFO] Invoking perform goals in directory /home/dev/Development/workspace-jee-kepler/doco/target/checkout
+[INFO] Executing goals 'deploy'...
+[INFO] [INFO] Scanning for projects...
+[INFO] [INFO]                                                                         
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] Building Doco 1.1.7
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ doco ---
+[INFO] [INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] [INFO] skip non existing resourceDirectory /home/dev/Development/workspace-jee-kepler/doco/target/checkout/src/main/resources
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-compiler-plugin:2.5.1:compile (default-compile) @ doco ---
+[INFO] [INFO] Compiling 14 source files to /home/dev/Development/workspace-jee-kepler/doco/target/checkout/target/classes
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ doco ---
+[INFO] [INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] [INFO] skip non existing resourceDirectory /home/dev/Development/workspace-jee-kepler/doco/target/checkout/src/test/resources
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-compiler-plugin:2.5.1:testCompile (default-testCompile) @ doco ---
+[INFO] [INFO] Compiling 3 source files to /home/dev/Development/workspace-jee-kepler/doco/target/checkout/target/test-classes
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ doco ---
+[INFO] [INFO] Surefire report directory: /home/dev/Development/workspace-jee-kepler/doco/target/checkout/target/surefire-reports
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vidolima.doco.DocoTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.243 sec
+[INFO] 
+[INFO] Results :
+[INFO] 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ doco ---
+[INFO] [INFO] Building jar: /home/dev/Development/workspace-jee-kepler/doco/target/checkout/target/doco-1.1.7.jar
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-install-plugin:2.4:install (default-install) @ doco ---
+[INFO] [INFO] Installing /home/dev/Development/workspace-jee-kepler/doco/target/checkout/target/doco-1.1.7.jar to /home/dev/.m2/repository/com/vidolima/doco/1.1.7/doco-1.1.7.jar
+[INFO] [INFO] Installing /home/dev/Development/workspace-jee-kepler/doco/target/checkout/pom.xml to /home/dev/.m2/repository/com/vidolima/doco/1.1.7/doco-1.1.7.pom
+[INFO] [INFO] 
+[INFO] [INFO] --- maven-deploy-plugin:2.7:deploy (default-deploy) @ doco ---
+[INFO] [INFO] Uploading: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/1.1.7/doco-1.1.7.jar
+[INFO] [INFO] Uploaded: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/1.1.7/doco-1.1.7.jar (19 KB at 1.8 KB/sec)
+[INFO] [INFO] Uploading: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/1.1.7/doco-1.1.7.pom
+[INFO] [INFO] Uploaded: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/1.1.7/doco-1.1.7.pom (3 KB at 0.8 KB/sec)
+[INFO] [INFO] Downloading: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/maven-metadata.xml
+[INFO] [INFO] Uploading: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/maven-metadata.xml
+[INFO] [INFO] Uploaded: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/vidolima/doco/maven-metadata.xml (296 B at 0.1 KB/sec)
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] BUILD SUCCESS
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [INFO] Total time: 25.271s
+[INFO] [INFO] Finished at: Wed Sep 24 07:56:29 BRT 2014
+[INFO] [INFO] Final Memory: 18M/165M
+[INFO] [INFO] ------------------------------------------------------------------------
+[INFO] [WARNING] The requested profile "release" could not be activated because it does not exist.
+[INFO] Cleaning up after release...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 58.855s
+[INFO] Finished at: Wed Sep 24 07:56:29 BRT 2014
+[INFO] Final Memory: 8M/131M
+[INFO] ------------------------------------------------------------------------
+All identities removed.
