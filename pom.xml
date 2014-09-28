@@ -2,14 +2,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vidolima</groupId>
 	<artifactId>doco</artifactId>
-	<version>1.1.9-SNAPSHOT</version>
+	<version>1.1.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2014</inceptionYear>
 	<name>Doco</name>
 	<url>http://www.vidolima.com/projects/doco</url>
 	<description>Doco - Documment Converter</description>
 	<properties>
-		<maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+		<!--maven.javadoc.failOnError>false</maven.javadoc.failOnError-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
