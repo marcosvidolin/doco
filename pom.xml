@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vidolima</groupId>
 	<artifactId>doco</artifactId>
-	<version>1.1.11-SNAPSHOT</version>
+	<version>1.1.11</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2014</inceptionYear>
 	<name>Doco</name>
@@ -129,7 +128,7 @@
 		<connection>scm:git:git@github.com:marcosvidolin/doco.git</connection>
 		<developerConnection>scm:git:git@github.com:marcosvidolin/doco.git</developerConnection>
 		<url>git@github.com:marcosvidolin/doco.git</url>
-		<tag>v1.1.8</tag>
+		<tag>v1.1.11</tag>
 	</scm>
 	<developers>
 		<developer>
