@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vidolima</groupId>
 	<artifactId>doco</artifactId>
@@ -9,7 +10,7 @@
 	<url>http://www.vidolima.com/projects/doco</url>
 	<description>Doco - Documment Converter</description>
 	<properties>
-		<!--maven.javadoc.failOnError>false</maven.javadoc.failOnError-->
+		<!--maven.javadoc.failOnError>false</maven.javadoc.failOnError -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -44,10 +45,24 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.5</version>
 				</plugin>
-		    <plugin>
-		      <artifactId>maven-javadoc-plugin</artifactId>
-		      <version>2.9.1</version>
-		    </plugin>
+				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -63,36 +78,36 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-source-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <id>attach-sources</id>
-			      <goals>
-			        <goal>jar</goal>
-			      </goals>
-			    </execution>
-			  </executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-javadoc-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <id>attach-javadocs</id>
-			      <goals>
-			        <goal>jar</goal>
-			      </goals>
-            <configuration>
-              <!-- switch on dependency-driven aggregation -->
-              <includeDependencySources>true</includeDependencySources>
-              <dependencySourceIncludes>
-                <!-- include ONLY dependencies I control -->
-                <dependencySourceInclude>com.vidolima.doco:*</dependencySourceInclude>
-              </dependencySourceIncludes>
-            </configuration>
-			    </execution>
-			  </executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<!-- switch on dependency-driven aggregation -->
+							<includeDependencySources>true</includeDependencySources>
+							<dependencySourceIncludes>
+								<!-- include ONLY dependencies I control -->
+								<dependencySourceInclude>com.vidolima.doco:*</dependencySourceInclude>
+							</dependencySourceIncludes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
