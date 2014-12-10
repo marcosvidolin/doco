@@ -10,6 +10,7 @@ import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.GeoPoint;
 import com.google.common.base.Strings;
 import com.googlecode.objectify.Ref;
+import com.vidolima.doco.annotation.DocumentEmbed;
 import com.vidolima.doco.annotation.DocumentField;
 import com.vidolima.doco.annotation.DocumentId;
 import com.vidolima.doco.annotation.DocumentRef;
@@ -59,6 +60,10 @@ final class DocumentParser {
 
     private List<java.lang.reflect.Field> getAllRefFields(Class<?> classOfObj) {
         return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentRef.class);
+    }
+
+    private List<java.lang.reflect.Field> getAllEmbedFields(Class<?> classOfObj) {
+        return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentEmbed.class);
     }
 
     /**
@@ -308,7 +313,26 @@ final class DocumentParser {
                 eligibleFields.add(f);
             }
         }
+        // get fields annotated with @DocumentEmbed
+        for (com.google.appengine.api.search.Field f : getAllSearchFieldsInEmbedClass(fieldNamePrefix, obj, classOfObj)) {
+            if (f != null) {
+                eligibleFields.add(f);
+            }
+        }
         return eligibleFields;
+    }
+
+    private List<com.google.appengine.api.search.Field> getAllSearchFieldsInEmbedClass(String fieldNamePrefix,
+        Object obj, Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
+        List<com.google.appengine.api.search.Field> searchFields = new ArrayList<com.google.appengine.api.search.Field>();
+        List<java.lang.reflect.Field> declaredFields = getAllEmbedFields(classOfObj);
+        for (java.lang.reflect.Field declaredField : declaredFields) {
+            Object fieldValue = declaredField.get(obj);
+            String newFieldNamePrefix = Strings.isNullOrEmpty(fieldNamePrefix) ? fieldValue.getClass().getSimpleName()
+                : (fieldNamePrefix + "_" + fieldValue.getClass().getSimpleName());
+            searchFields.addAll(getAllFieldsForDocument(newFieldNamePrefix, fieldValue, fieldValue.getClass()));
+        }
+        return searchFields;
     }
 
     /**
