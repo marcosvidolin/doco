@@ -41,6 +41,7 @@ public class DocumentEmbedTest {
             this.text = text;
             this.bRef = bRef;
             this.number = number;
+            this.bNull = null; // intentional null to make sure doco works fine with nulls
         }
 
         @DocumentId
@@ -50,6 +51,8 @@ public class DocumentEmbedTest {
         long number;
         @DocumentEmbed
         B bRef;
+        @DocumentEmbed
+        B bNull;
     }
 
     @Entity

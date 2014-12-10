@@ -328,9 +328,11 @@ final class DocumentParser {
         List<java.lang.reflect.Field> declaredFields = getAllEmbedFields(classOfObj);
         for (java.lang.reflect.Field declaredField : declaredFields) {
             Object fieldValue = declaredField.get(obj);
-            String newFieldNamePrefix = Strings.isNullOrEmpty(fieldNamePrefix) ? fieldValue.getClass().getSimpleName()
-                : (fieldNamePrefix + "_" + fieldValue.getClass().getSimpleName());
-            searchFields.addAll(getAllFieldsForDocument(newFieldNamePrefix, fieldValue, fieldValue.getClass()));
+            if (fieldValue != null) {
+                String newFieldNamePrefix = Strings.isNullOrEmpty(fieldNamePrefix) ? declaredField.getType()
+                    .getSimpleName() : (fieldNamePrefix + "_" + declaredField.getType().getSimpleName());
+                searchFields.addAll(getAllFieldsForDocument(newFieldNamePrefix, fieldValue, declaredField.getType()));
+            }
         }
         return searchFields;
     }

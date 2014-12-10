@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Some doc.
+ * Use this annotation on embedded fields.
  */
 @Documented
 @Target(ElementType.FIELD)
