@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.GeoPoint;
+import com.google.common.base.Strings;
+import com.googlecode.objectify.Ref;
+import com.vidolima.doco.annotation.DocumentEmbed;
 import com.vidolima.doco.annotation.DocumentField;
 import com.vidolima.doco.annotation.DocumentId;
+import com.vidolima.doco.annotation.DocumentRef;
 import com.vidolima.doco.annotation.FieldType;
 import com.vidolima.doco.exception.DocumentParseException;
 
@@ -51,6 +56,14 @@ final class DocumentParser {
      */
     List<java.lang.reflect.Field> getAllDocumentField(Class<?> classOfObj) {
         return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentField.class);
+    }
+
+    private List<java.lang.reflect.Field> getAllRefFields(Class<?> classOfObj) {
+        return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentRef.class);
+    }
+
+    private List<java.lang.reflect.Field> getAllEmbedFields(Class<?> classOfObj) {
+        return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentEmbed.class);
     }
 
     /**
@@ -159,8 +172,14 @@ final class DocumentParser {
         }
         if (FieldType.GEO_POINT.equals(fieldType)) {
             if (fieldValue != null) {
-                GeoPoint geoPoint = (GeoPoint) fieldValue;
-                return Field.newBuilder().setName(name).setGeoPoint(geoPoint).build();
+                if (fieldValue instanceof GeoPt) {
+                    GeoPt geoPt = (GeoPt) fieldValue;
+                    GeoPoint geoPoint = new GeoPoint(geoPt.getLatitude(), geoPt.getLongitude());
+                    return Field.newBuilder().setName(name).setGeoPoint(geoPoint).build();
+                } else {
+                    GeoPoint geoPoint = (GeoPoint) fieldValue;
+                    return Field.newBuilder().setName(name).setGeoPoint(geoPoint).build();
+                }
             }
         }
         if (FieldType.NUMBER.equals(fieldType))
@@ -186,8 +205,8 @@ final class DocumentParser {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    List<com.google.appengine.api.search.Field> getAllSearchFieldsByType(Object obj, Class<?> classOfObj,
-        FieldType fieldType) throws IllegalArgumentException, IllegalAccessException {
+    List<com.google.appengine.api.search.Field> getAllSearchFieldsByType(String fieldNamePrefix, Object obj,
+        Class<?> classOfObj, FieldType fieldType) throws IllegalArgumentException, IllegalAccessException {
 
         List<com.google.appengine.api.search.Field> fields = new ArrayList<Field>(0);
 
@@ -198,7 +217,8 @@ final class DocumentParser {
 
             if (annotation.type().equals(fieldType)) {
                 String name = ObjectParser.getFieldNameValue(f, annotation);
-                com.google.appengine.api.search.Field field = getSearchFieldByFieldType(name, f, obj, fieldType);
+                String fullName = Strings.isNullOrEmpty(fieldNamePrefix) ? name : fieldNamePrefix + "_" + name;
+                com.google.appengine.api.search.Field field = getSearchFieldByFieldType(fullName, f, obj, fieldType);
                 if (field != null) {
                     fields.add(field);
                 }
@@ -219,13 +239,14 @@ final class DocumentParser {
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    List<com.google.appengine.api.search.Field> getAllSearchFields(Object obj, Class<?> classOfObj)
-        throws IllegalArgumentException, IllegalAccessException {
+    List<com.google.appengine.api.search.Field> getAllSearchFields(String fieldNamePrefix, Object obj,
+        Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
 
         List<com.google.appengine.api.search.Field> fields = new ArrayList<com.google.appengine.api.search.Field>();
 
         for (FieldType type : FieldType.values()) {
-            for (com.google.appengine.api.search.Field f : getAllSearchFieldsByType(obj, classOfObj, type)) {
+            for (com.google.appengine.api.search.Field f : getAllSearchFieldsByType(fieldNamePrefix, obj, classOfObj,
+                type)) {
                 fields.add(f);
             }
         }
@@ -256,11 +277,86 @@ final class DocumentParser {
 
         Document.Builder builder = Document.newBuilder().setId(id);
 
-        for (com.google.appengine.api.search.Field f : getAllSearchFields(obj, classOfObj)) {
+        for (com.google.appengine.api.search.Field f : getAllFieldsForDocument("", obj, classOfObj)) {
             if (f != null) {
                 builder.addField(f);
             }
         }
+
         return builder.build();
+    }
+
+    /**
+     * Parses class for presence of @DocumentField, @DocumentRef, etc. annotations and generates {@link Field} from it.
+     * 
+     * @param fieldNamePrefix
+     *            prefix for field names if any. Normally this should be set to empty string or null. When supplied,
+     *            name of field becomes <b>prefix_</b>fieldName
+     * @param obj
+     *            object whcih should be used to get value of document fields.
+     * @param classOfObj
+     *            class of 'obj' parameter
+     * @return All possible fields which are to be added to the search document including fields of Ref entity.
+     */
+    private List<com.google.appengine.api.search.Field> getAllFieldsForDocument(String fieldNamePrefix, Object obj,
+        Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
+        List<com.google.appengine.api.search.Field> eligibleFields = new ArrayList<>();
+        // get fields annotated with @DocumentField
+        for (com.google.appengine.api.search.Field f : getAllSearchFields(fieldNamePrefix, obj, classOfObj)) {
+            if (f != null) {
+                eligibleFields.add(f);
+            }
+        }
+        // get fields annotated with @DocumentRef
+        for (com.google.appengine.api.search.Field f : getAllSearchFieldsFromRefClass(fieldNamePrefix, obj, classOfObj)) {
+            if (f != null) {
+                eligibleFields.add(f);
+            }
+        }
+        // get fields annotated with @DocumentEmbed
+        for (com.google.appengine.api.search.Field f : getAllSearchFieldsInEmbedClass(fieldNamePrefix, obj, classOfObj)) {
+            if (f != null) {
+                eligibleFields.add(f);
+            }
+        }
+        return eligibleFields;
+    }
+
+    private List<com.google.appengine.api.search.Field> getAllSearchFieldsInEmbedClass(String fieldNamePrefix,
+        Object obj, Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
+        List<com.google.appengine.api.search.Field> searchFields = new ArrayList<com.google.appengine.api.search.Field>();
+        List<java.lang.reflect.Field> declaredFields = getAllEmbedFields(classOfObj);
+        for (java.lang.reflect.Field declaredField : declaredFields) {
+            Object fieldValue = declaredField.get(obj);
+            if (fieldValue != null) {
+                String newFieldNamePrefix = Strings.isNullOrEmpty(fieldNamePrefix) ? declaredField.getType()
+                    .getSimpleName() : (fieldNamePrefix + "_" + declaredField.getType().getSimpleName());
+                searchFields.addAll(getAllFieldsForDocument(newFieldNamePrefix, fieldValue, declaredField.getType()));
+            }
+        }
+        return searchFields;
+    }
+
+    /**
+     * Creates {@link Field} for all annotated fields in the class of field annotated with {@link DocumentRef}
+     */
+    private List<com.google.appengine.api.search.Field> getAllSearchFieldsFromRefClass(String fieldNamePrefix,
+        Object obj, Class<?> classOfObj) throws IllegalArgumentException, IllegalAccessException {
+        List<com.google.appengine.api.search.Field> searchFields = new ArrayList<com.google.appengine.api.search.Field>();
+        List<java.lang.reflect.Field> declaredFields = getAllRefFields(classOfObj);
+        for (java.lang.reflect.Field declaredField : declaredFields) {
+            Object fieldValue = declaredField.get(obj);
+            // get the class from the annotation on this field (guaranteed to be annotated since we specifically asked
+            // for annotated fields only)
+            Class<?> refClass = declaredField.getAnnotation(DocumentRef.class).type();
+            if (!(fieldValue instanceof Ref<?>)) {
+                throw new IllegalStateException("Incorrect mapping found on field: " + declaredField.getName());
+            }
+            Ref<?> ref = (Ref<?>) fieldValue;
+            String newFieldNamePrefix = Strings.isNullOrEmpty(fieldNamePrefix) ? refClass.getSimpleName()
+                : fieldNamePrefix + "_" + refClass.getSimpleName();
+            searchFields.addAll(getAllFieldsForDocument(newFieldNamePrefix, ref.get(), refClass));
+        }
+        return searchFields;
     }
 }
