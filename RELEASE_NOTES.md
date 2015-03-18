@@ -1,5 +1,11 @@
 ## RELEASE NOTES
 
+## Version 2.0.0 - Mar 17, 2015
+**New**
+- Introducing dependency on Objectify.
+- Doco can now translate Ref<?> fields using @DocumentRef annotation.
+- Supporting embedded fields using @DocumentEmbed annotation. This is useful when an entity contains other classes which has fields needing indexing.
+
 ## Version 1.2.0 - Sep 28, 2014
 **Updates**
 - Doco should not be 'final' so that it can be mocked using Mockito
