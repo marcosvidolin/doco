@@ -317,7 +317,7 @@ final class DocumentParser {
         String facetName = StringUtils.isNotBlank(annotation.name()) ? annotation.name() : f.getName();
         switch (annotation.type()) {
         case ATOM:
-            return Facet.withAtom(facetName, (String) f.get(obj));
+            return Facet.withAtom(facetName, String.valueOf(f.get(obj)));
         case NUMBER:
             return Facet.withNumber(facetName, Double.valueOf(String.valueOf(f.get(obj))));
         default:
