@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.search.Document;
+import com.google.appengine.api.search.Facet;
 import com.google.appengine.api.search.Field;
 import com.google.appengine.api.search.GeoPoint;
 import com.google.common.base.Strings;
@@ -14,6 +17,7 @@ import com.vidolima.doco.annotation.DocumentEmbed;
 import com.vidolima.doco.annotation.DocumentField;
 import com.vidolima.doco.annotation.DocumentId;
 import com.vidolima.doco.annotation.DocumentRef;
+import com.vidolima.doco.annotation.FacetField;
 import com.vidolima.doco.annotation.FieldType;
 import com.vidolima.doco.exception.DocumentParseException;
 
@@ -24,6 +28,8 @@ import com.vidolima.doco.exception.DocumentParseException;
  * @since January 28, 2014
  */
 final class DocumentParser {
+
+    private static final String DEFAULT_FIELD_NAME_PREFIX = "";
 
     /**
      * Obtains the {@link java.lang.reflect.Field} annotated with {@link DocumentId} annotation.
@@ -64,6 +70,10 @@ final class DocumentParser {
 
     private List<java.lang.reflect.Field> getAllEmbedFields(Class<?> classOfObj) {
         return ReflectionUtils.getAnnotatedFields(classOfObj, DocumentEmbed.class);
+    }
+
+    List<java.lang.reflect.Field> getAllFacetFields(Class<?> classOfObj) {
+        return ReflectionUtils.getAnnotatedFields(classOfObj, FacetField.class);
     }
 
     /**
@@ -277,13 +287,42 @@ final class DocumentParser {
 
         Document.Builder builder = Document.newBuilder().setId(id);
 
-        for (com.google.appengine.api.search.Field f : getAllFieldsForDocument("", obj, classOfObj)) {
+        for (com.google.appengine.api.search.Field f : getAllFieldsForDocument(DEFAULT_FIELD_NAME_PREFIX, obj,
+            classOfObj)) {
             if (f != null) {
                 builder.addField(f);
             }
         }
 
+        for (Facet facet : getAllFacetsForDocument(obj, classOfObj)) {
+            builder.addFacet(facet);
+        }
+
         return builder.build();
+    }
+
+    private List<Facet> getAllFacetsForDocument(Object obj, Class<?> classOfObj) throws IllegalArgumentException,
+        IllegalAccessException {
+        List<Facet> facetsInClass = new ArrayList<>();
+        for (java.lang.reflect.Field f : getAllFacetFields(classOfObj)) {
+            Facet facet = getFacetValueFromField(f, obj);
+            facetsInClass.add(facet);
+        }
+        return facetsInClass;
+    }
+
+    private Facet getFacetValueFromField(java.lang.reflect.Field f, Object obj) throws IllegalArgumentException,
+        IllegalAccessException {
+        FacetField annotation = f.getAnnotation(FacetField.class);
+        String facetName = StringUtils.isNotBlank(annotation.name()) ? annotation.name() : f.getName();
+        switch (annotation.type()) {
+        case ATOM:
+            return Facet.withAtom(facetName, String.valueOf(f.get(obj)));
+        case NUMBER:
+            return Facet.withNumber(facetName, Double.valueOf(String.valueOf(f.get(obj))));
+        default:
+            throw new IllegalStateException(String.format("Unknown facet type %s found", facetName));
+        }
     }
 
     /**
