@@ -5,10 +5,7 @@ import java.util.List;
 
 import com.google.appengine.api.search.Document;
 import com.google.appengine.api.search.Index;
-import com.vidolima.doco.annotation.DocumentField;
-import com.vidolima.doco.annotation.DocumentId;
-import com.vidolima.doco.annotation.DocumentIndex;
-import com.vidolima.doco.annotation.FieldType;
+import com.vidolima.doco.annotation.*;
 import com.vidolima.doco.exception.AnnotationNotFoundException;
 import com.vidolima.doco.exception.IllegalAnnotationDeclarationException;
 import com.vidolima.doco.exception.ObjectParseException;
@@ -31,16 +28,24 @@ final class ObjectParser {
     static String getIndexName(Class<?> clazz) {
         DocumentIndex annotation = clazz.getAnnotation(DocumentIndex.class);
 
-        if (annotation == null)
-            throw new AnnotationNotFoundException("There is no @DocumentIndex annotation declared in " + clazz
-                + " class.");
+        if (annotation == null) {
+            DocumentIndexSubClass indexSubClass = clazz.getAnnotation(DocumentIndexSubClass.class);
 
-        String name = annotation.name();
-        if (name != null && name.length() > 0) {
-            return name;
+            if (indexSubClass == null) {
+                throw new AnnotationNotFoundException("There is no @DocumentIndex or @DocumentIndexSubClass annotation declared in " + clazz
+                        + " class.");
+            }
+
+            return clazz.getSimpleName();
         }
+        else {
+            String name = annotation.name();
+            if (name != null && name.length() > 0) {
+                return name;
+            }
 
-        return clazz.getSimpleName();
+            return clazz.getSimpleName();
+        }
     }
 
     /**
