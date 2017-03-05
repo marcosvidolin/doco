@@ -40,9 +40,8 @@ final class ReflectionUtils {
             }
         }
         // search in super class as well if annotations tells us.
-        while (classOfObj.getAnnotation(DocumentIndexSubClass.class) != null) {
+        if (classOfObj.getAnnotation(DocumentIndexSubClass.class) != null) {
             result.addAll(getAnnotatedFields(classOfObj.getSuperclass(), classOfAnnotation));
-            classOfObj = classOfObj.getSuperclass(); // very imp, otherwise infinite recursion
         }
 
         return result;
