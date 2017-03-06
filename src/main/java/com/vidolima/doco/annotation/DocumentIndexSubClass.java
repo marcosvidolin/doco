@@ -13,4 +13,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DocumentIndexSubClass {
+	/**
+     * Specifies the name of the Index.
+     * 
+     * @return name.
+     */
+    String name() default "";
 }

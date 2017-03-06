@@ -36,7 +36,9 @@ final class ObjectParser {
                         + " class.");
             }
 
-            return clazz.getSimpleName();
+            String name = indexSubClass.name();
+
+            return (name != null && name.length() > 0)? name : clazz.getSimpleName();
         }
         else {
             String name = annotation.name();
