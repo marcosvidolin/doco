@@ -3,6 +3,7 @@
 ## Version 2.1.0 - Mar 6, 2017
 **New**
 - Added feature where you can specify the an index for the subclass instead of forcing simpleName
+
 **Fixes**
 - ReflectionUtil getAnnotatedFields() method has an over counting issue.
 
