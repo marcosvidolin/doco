@@ -145,3 +145,7 @@ https://developers.google.com/appengine/docs/java/search/
 
 # License
 Doco is released under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+
+## Contributors
+[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/0)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/0)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/1)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/1)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/2)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/2)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/3)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/3)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/4)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/4)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/5)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/5)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/6)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/6)[![](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/images/7)](https://sourcerer.io/fame/marcosvidolin/marcosvidolin/doco/links/7)
